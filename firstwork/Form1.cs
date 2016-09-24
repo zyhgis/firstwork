@@ -11,6 +11,7 @@ using SharpMap.Forms;
 using GeoAPI.Geometries;
 using SharpMap.Layers;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace firstwork
 {
@@ -245,13 +246,101 @@ namespace firstwork
                 //}
             }
         }
+        public void RunPythonScript(string sArgName, string args = "", params string[] teps)
+        {
+            Control.CheckForIllegalCrossThreadCalls = false;
+            Process p = new Process();
+            string path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + sArgName;// 获得python文件的绝对路径
+            p.StartInfo.FileName = @"C:\Python27\python.exe";
+            string sArguments = path;
+            if (teps.Length > 0)
+            {
+                foreach (string sigstr in teps)
+                {
+                    sArguments += " " + sigstr;//传递参数
+                }
+            }
+            if (args.Length > 0)
+            {
 
+                sArguments += " " + args;
+
+            }
+
+            p.StartInfo.Arguments = sArguments;
+
+            p.StartInfo.UseShellExecute = false;
+
+            p.StartInfo.RedirectStandardOutput = true;
+
+            p.StartInfo.RedirectStandardInput = true;
+
+            p.StartInfo.RedirectStandardError = true;
+
+            p.StartInfo.CreateNoWindow = true;
+
+            p.Start();
+            p.BeginOutputReadLine();
+            p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
+            //Console.ReadLine();
+            p.WaitForExit();
+        }
+        void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+                //StringBuilder sb = new StringBuilder(this.textBox1.Text);
+                //this.textBox1.Text = sb.AppendLine(e.Data).ToString();
+                //this.textBox1.SelectionStart = this.textBox1.Text.Length;
+                //this.textBox1.ScrollToCaret();
+                AppendText(e.Data + Environment.NewLine);
+            }
+        }
+        public delegate void AppendTextCallback(string text);
+        public void AppendText(string text)
+        {
+            MessageBox.Show(text);
+        }
+       
         private void qA文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
            // TreeNode l=treeView1.
-            TreeNodeCollection layer = treeView1.Nodes;
-            QAWF frm = new QAWF(layer);
+           // TreeNodeCollection layer = treeView1.Nodes;
+            QAWF frm = new QAWF(this);
             frm.Show();
+            //if (frm.ShowDialog(this) == DialogResult.OK)
+            //{
+            //    tasklist.Items.Add(frm.getItem());
+            //    string[] str = new string[4];
+            //    //str[0] = "E:\\wangxc20160912\\cqa_data\\tqa2008.tif";
+            //    //str[1] = "E:\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
+            //    //str[2] = "-3000";
+            //    //str[3] = "E:\\wangxc20160912\\fcndvidata\\ftndvi2008.tif";
+            //    string inputpath1 = frm.datacomboBox.Text.Trim();
+            //    string inputpath2 = frm.selectcomboBox.Text.Trim();
+            //    int invalidint = -3000;
+            //    try
+            //    {
+            //        invalidint = Convert.ToInt32(frm.invaliddata.Text.Trim());
+            //    }
+            //    catch (Exception)
+            //    {
+
+            //        MessageBox.Show("无效值应为数字");
+            //    }
+            //    string outpath = frm.resulttext.Text.Trim();
+            //    str[0] = inputpath1;
+            //    str[1] = inputpath2;
+            //    str[2] = invalidint.ToString();
+            //    str[3] = outpath;
+            //    //RunPythonScript rps=new RunPythonScript();
+            //    //rps.RunPythonScriptFunction("qa_choice.py", "", str);
+            //    //this.Close();
+            //    //this.Dispose();
+            //    RunPythonScript("qa_choice.py", "", str);
+            //}
+            ////frm.Close();
+            ////frm.Dispose();
 
         }
 
@@ -380,6 +469,20 @@ namespace firstwork
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void 进程ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //splitContainer2.Panel2.
+            Messages sAllPage = new Messages();
+            //  sAllPage.FormBorderStyle = FormBorderStyle.None;
+            // sAllPage.Dock = DockStyle.Fill;
+            sAllPage.TopLevel = false;
+            sAllPage.AllowDrop = true;
+            //this.panel1.Controls.Clear();
+            this.Controls.Add(sAllPage);
+            //this.panel1.
+            sAllPage.Show();
         }
     }
 }

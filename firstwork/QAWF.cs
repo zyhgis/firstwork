@@ -11,20 +11,18 @@ using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 namespace firstwork
 {
     public partial class QAWF : Form
     {
-        public QAWF(TreeNodeCollection layer)
+        Form1 mainform;
+        public QAWF(Form1 frm)
         {
+            this.mainform = frm;
             InitializeComponent();
-            if (layer.Count > 0)
-            {
-                for (int i = 1; i < layer.Count; i++)
-                {
-                    datacomboBox.Items.Add(layer[i].Name);
-                }
-            }
+            //okbt.DialogResult = DialogResult.OK;
+            
         }
 
         private void QAWF_Load(object sender, EventArgs e)
@@ -93,8 +91,9 @@ namespace firstwork
         {
             this.Dispose();
         }
-        public  void RunPythonScript(string sArgName, string args = "", params string[] teps)
+        public void RunPythonScript(string sArgName, string args = "", params string[] teps)
         {
+            Control.CheckForIllegalCrossThreadCalls = false;
             Process p = new Process();
             string path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + sArgName;// 获得python文件的绝对路径
             p.StartInfo.FileName = @"C:\Python27\python.exe";
@@ -131,20 +130,27 @@ namespace firstwork
             //Console.ReadLine();
             p.WaitForExit();
         }
-         void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                AppendText(e.Data + Environment.NewLine);
+                StringBuilder sb = new StringBuilder(this.textBox1.Text);
+                this.textBox1.Text = sb.AppendLine(e.Data).ToString();
+                TreeNode result = new TreeNode();
+                result.Text = "状态";
+                TreeNode result2 = new TreeNode();
+                result2.Text = sb.AppendLine(e.Data).ToString();
+                result.Nodes.Add(result2);
+                mainform.tasklist.Nodes.Add(result);
+                this.textBox1.SelectionStart = this.textBox1.Text.Length;
+                this.textBox1.ScrollToCaret();
+                //AppendText(e.Data + Environment.NewLine);
             }
         }
         public delegate void AppendTextCallback(string text);
-        public  void AppendText(string text)
+        public void AppendText(string text)
         {
-          
-          MessageBox.Show(text);
-
-          label5.Text = text;
+            MessageBox.Show(text);
         }
         private void run_cmd(string cmd, string args)
         {
@@ -162,15 +168,102 @@ namespace firstwork
                 }
             }
         }
+        public string getItem()
+        {
+            return "QA文件"+DateTime.Now;
+        }
         private void okbt_Click(object sender, EventArgs e)
         {
-            
+            //List<string> str = new List<string>();
             string[] str=new string[4];
-            str[0]="E:\\wangxc20160912\\cqa_data\\tqa2008.tif";
-            str[1]="E:\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
-            str[2]="-3000";
-            str[3]="E:\\wangxc20160912\\fcndvidata\\ftndvi2008.tif";
-            RunPythonScript("qa_choice.py","",str);
+            string inputpath1 = datacomboBox.Text.Trim();
+            string inputpath2 = selectcomboBox.Text.Trim();
+            int invalidint = -3000;
+            try
+            {
+                invalidint = Convert.ToInt32(invaliddata.Text.Trim());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无效值应为数字");
+            }
+            string outpath = resulttext.Text.Trim();
+            str[0] = inputpath1;
+            str[1] = inputpath2;
+            str[2] = invalidint.ToString();
+            str[3] = outpath;
+
+
+
+            //str[0] = "e:\\work\\共享杯\\wangxc20160912\\cqa_data\\tqa2008.tif";
+            //str[1] = "e:\\work\\共享杯\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
+            //str[2] = "-3000";
+            //str[3] = "e:\\work\\共享杯\\wangxc20160912\\fcndvidata\\ftndvi2008.tif";
+
+
+            //str[0] = "e:\\wangxc20160912\\cqa_data\\tqa2008.tif";
+            //str[1] = "e:\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
+            //str[2] = "-3000";
+            //str[3] = "e:\\wangxc20160912\\fcndvidata\\ftndvi2008.tif";
+
+            string taskname = "QA文件" + DateTime.Now;
+            TreeNode task=new TreeNode();
+            task.Text = taskname;
+
+            TreeNode input = new TreeNode();
+            input.Text = "输入";
+            TreeNode input1 = new TreeNode();
+            input1.Text = str[0];
+            TreeNode input2 = new TreeNode();
+            input2.Text = str[1];
+            TreeNode input3 = new TreeNode();
+            input3.Text = str[2];
+
+
+            TreeNode output = new TreeNode();
+            output.Text = "输出";
+            TreeNode output1 = new TreeNode();
+            output1.Text = str[3];
+
+            TreeNode result = new TreeNode();
+            result.Text = "运行中";
+
+            input.Nodes.Add(input1);
+            input.Nodes.Add(input2);
+            input.Nodes.Add(input3);
+            output.Nodes.Add(output1);
+            task.Nodes.Add(input);
+            task.Nodes.Add(output);
+            task.Nodes.Add(result);
+            mainform.tasklist.Nodes.Add(task);//（）"QA文件"+DateTime.Now);
+
+            //Form1 frm = new Form1();
+            //frm.listBox1.Items.Add("ewew");
+            //TaskList frm = new TaskList(str);
+            //frm.FormBorderStyle = FormBorderStyle.None;
+            //frm.Dock = DockStyle.Fill;
+            //frm.TopLevel = false;
+            //frm.AllowDrop = true;
+            //this.panel1.Controls.Clear();
+            //this.Controls.Add(sAllPage);
+
+            
+            //frm.Show();
+            
+            RunPythonScript rps=new RunPythonScript(mainform,taskname);
+            //QAClass inputqa = new QAClass();
+            rps.pythonscript = "qa_choice.py";
+            rps.temp = "";
+            rps.index = str;
+            Thread t = new Thread(new ThreadStart(rps.RunPythonScriptFunction));
+            t.Start();
+            this.Close();
+            this.Dispose();
+            //rps.RunPythonScriptFunction("qa_choice.py", "", str);
+            //this.Close();
+            //this.Close();
+            //this.Dispose();
+            //RunPythonScript("qa_choice.py","",str);
             //string inputpath1 = datacomboBox.Text.Trim();
             //string inputpath2 = selectcomboBox.Text.Trim();
             //int invalidint = -3000;
@@ -196,7 +289,7 @@ namespace firstwork
 
             ////var say_hello = scope.GetVariable<Func<object>>("qa_choice2");
             ////say_hello();
-
+            
             ////var get_text = scope.GetVariable<Func<object>>("get_text");
             ////var text = get_text().ToString();
             ////Console.WriteLine(text);

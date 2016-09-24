@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
-sys.path.append('C:\\Python27\\lib')
-import os
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+sys.path.append(r"E:\work\共享杯\code\firstwork\firstwork\bin\Debug")
 from GetTiff import Tiff   #GetTiff是自己编写的一个读写栅格文件的包，Tiff是相应的一个读写栅格类文件
 def judgeuse(a):      #该函数主要用以判断QA文件某一数值是否有效
     b=bin(a)           #a表示为QA文件某一像元值；bin（）是十进制与二进制之间的转换函数，但该函数的转换结果是字符串类型的
@@ -14,8 +12,20 @@ def judgeuse(a):      #该函数主要用以判断QA文件某一数值是否有�
     else:
         r01=1        #函数返回值为1，表示有效值
     return r01
-def qa_choice2(dqdata,ndvidata,invaliddata,result):
+try:
+    filename=sys.argv[0]
+    dqdata=sys.argv[1]
+    ndvidata=sys.argv[2]
+    invaliddata=sys.argv[3]
+    result=sys.argv[4]
+except:
+    dqdata = "U"
+    ndvidata = "k"
+    invaliddata = -3000
+    result = "ds"
 
+def qa_choice2(dqdata,ndvidata,invaliddata,result):
+    #print "开始"
     A=Tiff()        #调用类文件
 
     qadata=A.read_tif(dqdata)    #读取QA文件
@@ -33,8 +43,8 @@ def qa_choice2(dqdata,ndvidata,invaliddata,result):
     row=tuple01[0]         #取出数据的行数，赋值给row
     col=tuple01[1]         #取出数据的行数，赋值给col
 
-    print row
-    print col
+    #print row
+    #print col
 
     NdviData01=NdviData      #将ndvi原始数据赋值给NdviData01数组
 
@@ -46,6 +56,11 @@ def qa_choice2(dqdata,ndvidata,invaliddata,result):
     A.write_tif(result,ndvidata[0],ndvidata[1],NdviData01)     #将筛选后的ndvi数据重新写为栅格文件
 
     print "ok"
+qa_choice2(dqdata,ndvidata,invaliddata,result)
+
+
+
+
 
 
 
