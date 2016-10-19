@@ -12,6 +12,8 @@ using Microsoft.Scripting.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 namespace firstwork
 {
     public partial class QAWF : Form
@@ -24,25 +26,47 @@ namespace firstwork
             //okbt.DialogResult = DialogResult.OK;
             
         }
-
+        public List<string> GetLayerPath()
+        {
+            List<string> LayerPathList = new List<string>();
+            ILayer pEnumLayer;
+            for (int i = 0; i < mainform.mainMap.LayerCount; i++)
+            {
+                pEnumLayer = mainform.mainMap.get_Layer(i);
+                IDataLayer2 dlayer = pEnumLayer as IDataLayer2;
+                IDatasetName ds = dlayer.DataSourceName as IDatasetName;
+                IWorkspaceName ws = ds.WorkspaceName;
+                string layerpath = ws.PathName + pEnumLayer.Name;
+                LayerPathList.Add(layerpath);
+            }  
+            return LayerPathList;
+        }
         private void QAWF_Load(object sender, EventArgs e)
         {
-
+            List<string> layerpathList = new List<string>();
+            layerpathList = GetLayerPath();
+            if (layerpathList == null)
+                return;
+            foreach (string item in layerpathList)
+            {
+                datacomboBox.Items.Add(item);
+                selectcomboBox.Items.Add(item);
+            }
+            
         }
 
         private void showhelpbt_Click(object sender, EventArgs e)
         {
-
-            this.Size = new Size(556, 308);
+            this.Size = new Size(556, this.Size.Height);
             helptext.Visible = true;
-            showhelpbt.Visible = false;
             hidehelpbt.Visible = true;
+            showhelpbt.Visible = false;
         }
 
         private void hidehelpbt_Click(object sender, EventArgs e)
         {
-            this.Size = new Size(395, 308);
-            helptext.Visible = true;
+            this.Size = new Size(395, this.Size.Height);
+            helptext.Visible = false;
             hidehelpbt.Visible = false;
             showhelpbt.Visible = true;
 
@@ -134,16 +158,14 @@ namespace firstwork
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                StringBuilder sb = new StringBuilder(this.textBox1.Text);
-                this.textBox1.Text = sb.AppendLine(e.Data).ToString();
+               
                 TreeNode result = new TreeNode();
                 result.Text = "状态";
                 TreeNode result2 = new TreeNode();
-                result2.Text = sb.AppendLine(e.Data).ToString();
+               
                 result.Nodes.Add(result2);
                 mainform.tasklist.Nodes.Add(result);
-                this.textBox1.SelectionStart = this.textBox1.Text.Length;
-                this.textBox1.ScrollToCaret();
+              
                 //AppendText(e.Data + Environment.NewLine);
             }
         }
@@ -172,42 +194,16 @@ namespace firstwork
         {
             return "QA文件"+DateTime.Now;
         }
-        private void okbt_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 任务开始在任务列表里写入信息
+        /// </summary>
+        /// <param name="str">参数数组</param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private string AddToTaskList(List<string> str,string name)
         {
-            //List<string> str = new List<string>();
-            string[] str=new string[4];
-            string inputpath1 = datacomboBox.Text.Trim();
-            string inputpath2 = selectcomboBox.Text.Trim();
-            int invalidint = -3000;
-            try
-            {
-                invalidint = Convert.ToInt32(invaliddata.Text.Trim());
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("无效值应为数字");
-            }
-            string outpath = resulttext.Text.Trim();
-            str[0] = inputpath1;
-            str[1] = inputpath2;
-            str[2] = invalidint.ToString();
-            str[3] = outpath;
-
-
-
-            //str[0] = "e:\\work\\共享杯\\wangxc20160912\\cqa_data\\tqa2008.tif";
-            //str[1] = "e:\\work\\共享杯\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
-            //str[2] = "-3000";
-            //str[3] = "e:\\work\\共享杯\\wangxc20160912\\fcndvidata\\ftndvi2008.tif";
-
-
-            //str[0] = "e:\\wangxc20160912\\cqa_data\\tqa2008.tif";
-            //str[1] = "e:\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
-            //str[2] = "-3000";
-            //str[3] = "e:\\wangxc20160912\\fcndvidata\\ftndvi2008.tif";
-
-            string taskname = "QA文件" + DateTime.Now;
-            TreeNode task=new TreeNode();
+            string taskname = name + DateTime.Now;
+            TreeNode task = new TreeNode();
             task.Text = taskname;
 
             TreeNode input = new TreeNode();
@@ -236,7 +232,53 @@ namespace firstwork
             task.Nodes.Add(output);
             task.Nodes.Add(result);
             mainform.tasklist.Nodes.Add(task);//（）"QA文件"+DateTime.Now);
+            return taskname;
+        }
+        private void okbt_Click(object sender, EventArgs e)
+        {
+            List<string> str = new List<string>();
+            //string[] str=new string[4];
+            string inputpath1 = datacomboBox.Text.Trim();
+            string inputpath2 = selectcomboBox.Text.Trim();
+            if (inputpath1 == "")
+            {
+                MessageBox.Show("数据文件不能为空");
+                return;
+            }
+            if (inputpath2 == "")
+            {
+                MessageBox.Show("筛选文件不能为空");
+                return;
+            }
+            int invalidint = -3000;
+            try
+            {
+                invalidint = Convert.ToInt32(invaliddata.Text.Trim());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无效值应为数字");
+                return;
+            }
+ 
+           string outpath = resulttext.Text.Trim();
+            str[0] = inputpath1;
+            str[1] = inputpath2;
+            str[2] = invalidint.ToString();
+            str[3] = outpath;
 
+            //str[0] = "e:\\work\\共享杯\\wangxc20160912\\cqa_data\\tqa2008.tif";
+            //str[1] = "e:\\work\\共享杯\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
+            //str[2] = "-3000";
+            //str[3] = "e:\\work\\共享杯\\wangxc20160912\\fcndvidata\\f.tif";
+
+
+            //str[0] = "e:\\wangxc20160912\\cqa_data\\tqa2008.tif";
+            //str[1] = "e:\\wangxc20160912\\cndvi_data\\tndvi2008.tif";
+            //str[2] = "-3000";
+            //str[3] = "e:\\wangxc20160912\\fcndvidata\\ftndvi2008.tif";
+
+            
             //Form1 frm = new Form1();
             //frm.listBox1.Items.Add("ewew");
             //TaskList frm = new TaskList(str);
@@ -249,7 +291,7 @@ namespace firstwork
 
             
             //frm.Show();
-            
+            string taskname = AddToTaskList(str, "QA文件");
             RunPythonScript rps=new RunPythonScript(mainform,taskname);
             //QAClass inputqa = new QAClass();
             rps.pythonscript = "qa_choice.py";

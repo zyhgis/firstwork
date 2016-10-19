@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace firstwork
 {
-    class QAClass
+    class PublicMethods
     {
-        public string pythonscript;
-        public string temp;
-        public string[] index;
+
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CZF));
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.ignoredata = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.resulttext = new System.Windows.Forms.TextBox();
             this.hidehelpbt = new System.Windows.Forms.Button();
@@ -39,32 +39,33 @@
             this.selfilebt = new System.Windows.Forms.Button();
             this.datafilebt = new System.Windows.Forms.Button();
             this.selectcomboBox = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.invalidata = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.okbt = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.datacomboBox = new System.Windows.Forms.ComboBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.diseastermaindata = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.nodiseasterdata = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.diseasterdata = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox2
+            // ignoredata
             // 
-            this.textBox2.Location = new System.Drawing.Point(288, 186);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(63, 21);
-            this.textBox2.TabIndex = 68;
+            this.ignoredata.Location = new System.Drawing.Point(288, 178);
+            this.ignoredata.Name = "ignoredata";
+            this.ignoredata.Size = new System.Drawing.Size(63, 21);
+            this.ignoredata.TabIndex = 68;
+            this.ignoredata.Text = "-3000";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(206, 190);
+            this.label5.Location = new System.Drawing.Point(206, 182);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 12);
             this.label5.TabIndex = 67;
@@ -79,7 +80,7 @@
             // 
             // hidehelpbt
             // 
-            this.hidehelpbt.Location = new System.Drawing.Point(277, 286);
+            this.hidehelpbt.Location = new System.Drawing.Point(277, 268);
             this.hidehelpbt.Name = "hidehelpbt";
             this.hidehelpbt.Size = new System.Drawing.Size(74, 23);
             this.hidehelpbt.TabIndex = 65;
@@ -89,7 +90,7 @@
             // 
             // showhelpbt
             // 
-            this.showhelpbt.Location = new System.Drawing.Point(277, 286);
+            this.showhelpbt.Location = new System.Drawing.Point(277, 268);
             this.showhelpbt.Name = "showhelpbt";
             this.showhelpbt.Size = new System.Drawing.Size(74, 23);
             this.showhelpbt.TabIndex = 64;
@@ -98,7 +99,7 @@
             // 
             // concelbt
             // 
-            this.concelbt.Location = new System.Drawing.Point(210, 286);
+            this.concelbt.Location = new System.Drawing.Point(210, 268);
             this.concelbt.Name = "concelbt";
             this.concelbt.Size = new System.Drawing.Size(61, 23);
             this.concelbt.TabIndex = 63;
@@ -146,17 +147,18 @@
             this.selectcomboBox.Size = new System.Drawing.Size(300, 20);
             this.selectcomboBox.TabIndex = 59;
             // 
-            // textBox1
+            // invalidata
             // 
-            this.textBox1.Location = new System.Drawing.Point(90, 187);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(57, 21);
-            this.textBox1.TabIndex = 58;
+            this.invalidata.Location = new System.Drawing.Point(90, 179);
+            this.invalidata.Name = "invalidata";
+            this.invalidata.Size = new System.Drawing.Size(57, 21);
+            this.invalidata.TabIndex = 58;
+            this.invalidata.Text = "-3000";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 190);
+            this.label4.Location = new System.Drawing.Point(9, 182);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 57;
@@ -164,12 +166,13 @@
             // 
             // okbt
             // 
-            this.okbt.Location = new System.Drawing.Point(144, 286);
+            this.okbt.Location = new System.Drawing.Point(144, 268);
             this.okbt.Name = "okbt";
             this.okbt.Size = new System.Drawing.Size(60, 23);
             this.okbt.TabIndex = 56;
             this.okbt.Text = "确定";
             this.okbt.UseVisualStyleBackColor = true;
+            this.okbt.Click += new System.EventHandler(this.okbt_Click);
             // 
             // label3
             // 
@@ -209,49 +212,49 @@
             this.datacomboBox.Size = new System.Drawing.Size(299, 20);
             this.datacomboBox.TabIndex = 52;
             // 
-            // textBox4
+            // diseastermaindata
             // 
-            this.textBox4.Location = new System.Drawing.Point(90, 240);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(261, 21);
-            this.textBox4.TabIndex = 70;
+            this.diseastermaindata.Location = new System.Drawing.Point(90, 232);
+            this.diseastermaindata.Name = "diseastermaindata";
+            this.diseastermaindata.Size = new System.Drawing.Size(261, 21);
+            this.diseastermaindata.TabIndex = 70;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 243);
+            this.label7.Location = new System.Drawing.Point(7, 235);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(77, 12);
             this.label7.TabIndex = 69;
             this.label7.Text = "受灾阈值设定";
             // 
-            // textBox5
+            // nodiseasterdata
             // 
-            this.textBox5.Location = new System.Drawing.Point(288, 213);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(63, 21);
-            this.textBox5.TabIndex = 76;
+            this.nodiseasterdata.Location = new System.Drawing.Point(288, 205);
+            this.nodiseasterdata.Name = "nodiseasterdata";
+            this.nodiseasterdata.Size = new System.Drawing.Size(63, 21);
+            this.nodiseasterdata.TabIndex = 76;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(206, 217);
+            this.label8.Location = new System.Drawing.Point(206, 209);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 12);
             this.label8.TabIndex = 75;
             this.label8.Text = "未受灾值设定";
             // 
-            // textBox6
+            // diseasterdata
             // 
-            this.textBox6.Location = new System.Drawing.Point(90, 213);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(57, 21);
-            this.textBox6.TabIndex = 74;
+            this.diseasterdata.Location = new System.Drawing.Point(90, 205);
+            this.diseasterdata.Name = "diseasterdata";
+            this.diseasterdata.Size = new System.Drawing.Size(57, 21);
+            this.diseasterdata.TabIndex = 74;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(9, 217);
+            this.label9.Location = new System.Drawing.Point(9, 209);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(65, 12);
             this.label9.TabIndex = 73;
@@ -261,14 +264,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 356);
-            this.Controls.Add(this.textBox5);
+            this.ClientSize = new System.Drawing.Size(366, 300);
+            this.Controls.Add(this.nodiseasterdata);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.diseasterdata);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.diseastermaindata);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.ignoredata);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.resulttext);
             this.Controls.Add(this.hidehelpbt);
@@ -278,7 +281,7 @@
             this.Controls.Add(this.selfilebt);
             this.Controls.Add(this.datafilebt);
             this.Controls.Add(this.selectcomboBox);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.invalidata);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.okbt);
             this.Controls.Add(this.label3);
@@ -294,7 +297,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox ignoredata;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox resulttext;
         private System.Windows.Forms.Button hidehelpbt;
@@ -304,18 +307,18 @@
         private System.Windows.Forms.Button selfilebt;
         private System.Windows.Forms.Button datafilebt;
         private System.Windows.Forms.ComboBox selectcomboBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox invalidata;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button okbt;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox datacomboBox;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox diseastermaindata;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox nodiseasterdata;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox diseasterdata;
         private System.Windows.Forms.Label label9;
     }
 }

@@ -49,6 +49,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.datacomboBox = new System.Windows.Forms.ComboBox();
+            this.helptext = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -83,6 +84,7 @@
             this.invaildtextBox.Name = "invaildtextBox";
             this.invaildtextBox.Size = new System.Drawing.Size(100, 21);
             this.invaildtextBox.TabIndex = 63;
+            this.invaildtextBox.Text = "-3000";
             // 
             // label1
             // 
@@ -99,6 +101,7 @@
             this.ignoretextBox.Name = "ignoretextBox";
             this.ignoretextBox.Size = new System.Drawing.Size(99, 21);
             this.ignoretextBox.TabIndex = 61;
+            this.ignoretextBox.Text = "-3000";
             // 
             // label4
             // 
@@ -118,6 +121,7 @@
             this.hidehelpbt.Text = "<<隐藏帮助";
             this.hidehelpbt.UseVisualStyleBackColor = true;
             this.hidehelpbt.Visible = false;
+            this.hidehelpbt.Click += new System.EventHandler(this.hidehelpbt_Click);
             // 
             // showhelpbt
             // 
@@ -127,6 +131,7 @@
             this.showhelpbt.TabIndex = 58;
             this.showhelpbt.Text = "显示帮助>>";
             this.showhelpbt.UseVisualStyleBackColor = true;
+            this.showhelpbt.Click += new System.EventHandler(this.showhelpbt_Click);
             // 
             // concelbt
             // 
@@ -145,6 +150,7 @@
             this.okbt.TabIndex = 56;
             this.okbt.Text = "确定";
             this.okbt.UseVisualStyleBackColor = true;
+            this.okbt.Click += new System.EventHandler(this.okbt_Click);
             // 
             // delectbt
             // 
@@ -228,11 +234,20 @@
             this.datacomboBox.Size = new System.Drawing.Size(325, 20);
             this.datacomboBox.TabIndex = 70;
             // 
+            // helptext
+            // 
+            this.helptext.Location = new System.Drawing.Point(397, 6);
+            this.helptext.Multiline = true;
+            this.helptext.Name = "helptext";
+            this.helptext.Size = new System.Drawing.Size(190, 400);
+            this.helptext.TabIndex = 71;
+            // 
             // ZCBDFW
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(393, 443);
+            this.ClientSize = new System.Drawing.Size(390, 416);
+            this.Controls.Add(this.helptext);
             this.Controls.Add(this.datacomboBox);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label5);
@@ -282,5 +297,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox datacomboBox;
+        private System.Windows.Forms.TextBox helptext;
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YZBZF));
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.ignoredata = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.resulttext = new System.Windows.Forms.TextBox();
             this.hidehelpbt = new System.Windows.Forms.Button();
@@ -39,21 +39,23 @@
             this.selfilebt = new System.Windows.Forms.Button();
             this.datafilebt = new System.Windows.Forms.Button();
             this.selectcomboBox = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.invaliddata = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.okbt = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.datacomboBox = new System.Windows.Forms.ComboBox();
+            this.helptext = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox2
+            // ignoredata
             // 
-            this.textBox2.Location = new System.Drawing.Point(288, 184);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(63, 21);
-            this.textBox2.TabIndex = 68;
+            this.ignoredata.Location = new System.Drawing.Point(288, 184);
+            this.ignoredata.Name = "ignoredata";
+            this.ignoredata.Size = new System.Drawing.Size(63, 21);
+            this.ignoredata.TabIndex = 68;
+            this.ignoredata.Text = "-3000";
             // 
             // label5
             // 
@@ -80,6 +82,7 @@
             this.hidehelpbt.Text = "<<隐藏帮助";
             this.hidehelpbt.UseVisualStyleBackColor = true;
             this.hidehelpbt.Visible = false;
+            this.hidehelpbt.Click += new System.EventHandler(this.hidehelpbt_Click);
             // 
             // showhelpbt
             // 
@@ -89,6 +92,7 @@
             this.showhelpbt.TabIndex = 64;
             this.showhelpbt.Text = "显示帮助>>";
             this.showhelpbt.UseVisualStyleBackColor = true;
+            this.showhelpbt.Click += new System.EventHandler(this.showhelpbt_Click);
             // 
             // concelbt
             // 
@@ -140,12 +144,13 @@
             this.selectcomboBox.Size = new System.Drawing.Size(300, 20);
             this.selectcomboBox.TabIndex = 59;
             // 
-            // textBox1
+            // invaliddata
             // 
-            this.textBox1.Location = new System.Drawing.Point(78, 184);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(57, 21);
-            this.textBox1.TabIndex = 58;
+            this.invaliddata.Location = new System.Drawing.Point(78, 184);
+            this.invaliddata.Name = "invaliddata";
+            this.invaliddata.Size = new System.Drawing.Size(57, 21);
+            this.invaliddata.TabIndex = 58;
+            this.invaliddata.Text = "-3000";
             // 
             // label4
             // 
@@ -164,6 +169,7 @@
             this.okbt.TabIndex = 56;
             this.okbt.Text = "确定";
             this.okbt.UseVisualStyleBackColor = true;
+            this.okbt.Click += new System.EventHandler(this.okbt_Click);
             // 
             // label3
             // 
@@ -203,12 +209,21 @@
             this.datacomboBox.Size = new System.Drawing.Size(299, 20);
             this.datacomboBox.TabIndex = 52;
             // 
+            // helptext
+            // 
+            this.helptext.Location = new System.Drawing.Point(367, 13);
+            this.helptext.Multiline = true;
+            this.helptext.Name = "helptext";
+            this.helptext.Size = new System.Drawing.Size(136, 242);
+            this.helptext.TabIndex = 69;
+            // 
             // YZBZF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(370, 261);
-            this.Controls.Add(this.textBox2);
+            this.ClientSize = new System.Drawing.Size(364, 261);
+            this.Controls.Add(this.helptext);
+            this.Controls.Add(this.ignoredata);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.resulttext);
             this.Controls.Add(this.hidehelpbt);
@@ -218,7 +233,7 @@
             this.Controls.Add(this.selfilebt);
             this.Controls.Add(this.datafilebt);
             this.Controls.Add(this.selectcomboBox);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.invaliddata);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.okbt);
             this.Controls.Add(this.label3);
@@ -234,7 +249,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox ignoredata;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox resulttext;
         private System.Windows.Forms.Button hidehelpbt;
@@ -244,12 +259,13 @@
         private System.Windows.Forms.Button selfilebt;
         private System.Windows.Forms.Button datafilebt;
         private System.Windows.Forms.ComboBox selectcomboBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox invaliddata;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button okbt;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox datacomboBox;
+        private System.Windows.Forms.TextBox helptext;
     }
 }

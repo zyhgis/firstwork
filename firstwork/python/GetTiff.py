@@ -1,16 +1,22 @@
-import sys
-sys.path.append('C:\\Python27\\lib')
-#sys.path.append('C:\\Python27\\lib\\site-packages\\setuptools-12.0.3-py2.7.egg')
-sys.path.append('C:\\Python27\\lib\\site-packages\\osgeo')
-import os
-sys.path.append(os.path.abspath(os.path.dirname(__file__))+'\osgeo')
-
+﻿# -*- coding: utf-8 -*-
 from osgeo import gdal
-#from gdal import Open,GDT_Byte,GDT_Int16,GDT_Float32,GetDriverByName
-import numpy as np
-
+# import numpy as np
+import chardet
+import os.path
 class Tiff:
 	def read_tif(self,filename):
+		# filename=filename.decode('gbk').encode('utf-8')
+		# print isinstance(filename,basestring)
+		# filename=unicode(filename).unicode("UTF-8")
+		# filename.decode("GB2312")
+		# filename=filename.decode('iso-8859-2').encode('utf8')
+		# filename="e:\\work\\共享杯\\wangxc20160912\\cqa_data\\tqa2008.tif";
+		# print chardet.detect(filename)
+		# # print isinstance(filename, basestring)
+		# if os.path.exists(filename)==False:
+		# 	return filename+"不存在"
+		print filename+"gettiff"
+		gdal.SetConfigOption("GDAL_FILENAME_IS_UTF8", "NO")
 		dataset=gdal.Open(filename)
 		im_width=dataset.RasterXSize
 		im_height=dataset.RasterYSize
@@ -32,7 +38,7 @@ class Tiff:
 			datatype=gdal.GDT_Int16
 		else:
 			datatype=gdal.GDT_Float32
-
+		# print im_data.shape
 		if len(im_data.shape)==3:
 			im_bands,im_height,im_width=im_data.shape
 		else:

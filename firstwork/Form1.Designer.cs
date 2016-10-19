@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("图层列表");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.nDVI阈值法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.图像阈值法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.阈值比值法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.灾情分级ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.进程ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.mapBox1 = new SharpMap.Forms.MapBox();
+            this.tasklist = new System.Windows.Forms.TreeView();
+            this.mainMap = new ESRI.ArcGIS.Controls.AxMapControl();
+            this.axLicenseControl1 = new ESRI.ArcGIS.Controls.AxLicenseControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,13 +67,6 @@
             this.显示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.移除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.缩放至窗体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainmenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.展开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.折叠ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.添加ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.全选ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.反选ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tasklist = new System.Windows.Forms.TreeView();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -85,10 +78,12 @@
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axTOCControl1)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.rightmenu.SuspendLayout();
-            this.mainmenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // nDVI阈值法ToolStripMenuItem
@@ -117,27 +112,13 @@
             this.灾情分级ToolStripMenuItem.Name = "灾情分级ToolStripMenuItem";
             this.灾情分级ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.灾情分级ToolStripMenuItem.Text = "灾情分级";
-            // 
-            // 工具ToolStripMenuItem
-            // 
-            this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
-            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.工具ToolStripMenuItem.Text = "工具";
+            this.灾情分级ToolStripMenuItem.Click += new System.EventHandler(this.灾情分级ToolStripMenuItem_Click);
             // 
             // 帮助ToolStripMenuItem
             // 
-            this.帮助ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.进程ToolStripMenuItem});
             this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
             this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.帮助ToolStripMenuItem.Text = "帮助";
-            // 
-            // 进程ToolStripMenuItem
-            // 
-            this.进程ToolStripMenuItem.Name = "进程ToolStripMenuItem";
-            this.进程ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.进程ToolStripMenuItem.Text = "进程";
-            this.进程ToolStripMenuItem.Click += new System.EventHandler(this.进程ToolStripMenuItem_Click);
             // 
             // toolStripContainer1
             // 
@@ -184,7 +165,8 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.mapBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.mainMap);
+            this.splitContainer1.Panel2.Controls.Add(this.axLicenseControl1);
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Size = new System.Drawing.Size(678, 384);
             this.splitContainer1.SplitterDistance = 131;
@@ -204,7 +186,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.treeView1);
+            this.tabPage1.Controls.Add(this.axTOCControl1);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -213,19 +195,15 @@
             this.tabPage1.Text = "图层组织";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // treeView1
+            // axTOCControl1
             // 
-            this.treeView1.CheckBoxes = true;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(3, 3);
-            this.treeView1.Name = "treeView1";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "图层列表";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
-            this.treeView1.Size = new System.Drawing.Size(117, 352);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
+            this.axTOCControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axTOCControl1.Location = new System.Drawing.Point(3, 3);
+            this.axTOCControl1.Name = "axTOCControl1";
+            this.axTOCControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axTOCControl1.OcxState")));
+            this.axTOCControl1.Size = new System.Drawing.Size(117, 352);
+            this.axTOCControl1.TabIndex = 0;
+            this.axTOCControl1.OnMouseDown += new ESRI.ArcGIS.Controls.ITOCControlEvents_Ax_OnMouseDownEventHandler(this.axTOCControl1_OnMouseDown);
             // 
             // tabPage2
             // 
@@ -238,25 +216,31 @@
             this.tabPage2.Text = "任务列表";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // mapBox1
+            // tasklist
             // 
-            this.mapBox1.ActiveTool = SharpMap.Forms.MapBox.Tools.None;
-            this.mapBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.mapBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.mapBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapBox1.FineZoomFactor = 10D;
-            this.mapBox1.Location = new System.Drawing.Point(0, 0);
-            this.mapBox1.MapQueryMode = SharpMap.Forms.MapBox.MapQueryType.LayerByIndex;
-            this.mapBox1.Name = "mapBox1";
-            this.mapBox1.QueryGrowFactor = 5F;
-            this.mapBox1.QueryLayerIndex = 0;
-            this.mapBox1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            this.mapBox1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            this.mapBox1.ShowProgressUpdate = false;
-            this.mapBox1.Size = new System.Drawing.Size(543, 384);
-            this.mapBox1.TabIndex = 0;
-            this.mapBox1.Text = "mapBox1";
-            this.mapBox1.WheelZoomMagnitude = -2D;
+            this.tasklist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tasklist.Location = new System.Drawing.Point(3, 3);
+            this.tasklist.Name = "tasklist";
+            this.tasklist.Size = new System.Drawing.Size(117, 352);
+            this.tasklist.TabIndex = 0;
+            // 
+            // mainMap
+            // 
+            this.mainMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainMap.Location = new System.Drawing.Point(0, 0);
+            this.mainMap.Name = "mainMap";
+            this.mainMap.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("mainMap.OcxState")));
+            this.mainMap.Size = new System.Drawing.Size(543, 384);
+            this.mainMap.TabIndex = 1;
+            // 
+            // axLicenseControl1
+            // 
+            this.axLicenseControl1.Enabled = true;
+            this.axLicenseControl1.Location = new System.Drawing.Point(65, 190);
+            this.axLicenseControl1.Name = "axLicenseControl1";
+            this.axLicenseControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axLicenseControl1.OcxState")));
+            this.axLicenseControl1.Size = new System.Drawing.Size(32, 32);
+            this.axLicenseControl1.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -268,7 +252,6 @@
             this.受灾判断ToolStripMenuItem,
             this.灾情评估ToolStripMenuItem,
             this.灾情分级ToolStripMenuItem,
-            this.工具ToolStripMenuItem,
             this.帮助ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -306,12 +289,14 @@
             this.添加图层ToolStripMenuItem.Name = "添加图层ToolStripMenuItem";
             this.添加图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.添加图层ToolStripMenuItem.Text = "添加图层";
+            this.添加图层ToolStripMenuItem.Click += new System.EventHandler(this.添加图层ToolStripMenuItem_Click);
             // 
             // 展示ToolStripMenuItem
             // 
             this.展示ToolStripMenuItem.Name = "展示ToolStripMenuItem";
             this.展示ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.展示ToolStripMenuItem.Text = "展示";
+            this.展示ToolStripMenuItem.Click += new System.EventHandler(this.展示ToolStripMenuItem_Click);
             // 
             // 退出ToolStripMenuItem
             // 
@@ -332,21 +317,21 @@
             // qA文件ToolStripMenuItem
             // 
             this.qA文件ToolStripMenuItem.Name = "qA文件ToolStripMenuItem";
-            this.qA文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.qA文件ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.qA文件ToolStripMenuItem.Text = "QA文件";
             this.qA文件ToolStripMenuItem.Click += new System.EventHandler(this.qA文件ToolStripMenuItem_Click);
             // 
             // 筛选参考值ToolStripMenuItem
             // 
             this.筛选参考值ToolStripMenuItem.Name = "筛选参考值ToolStripMenuItem";
-            this.筛选参考值ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.筛选参考值ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.筛选参考值ToolStripMenuItem.Text = "筛选参考值";
             this.筛选参考值ToolStripMenuItem.Click += new System.EventHandler(this.筛选参考值ToolStripMenuItem_Click);
             // 
             // 剔除异常值ToolStripMenuItem
             // 
             this.剔除异常值ToolStripMenuItem.Name = "剔除异常值ToolStripMenuItem";
-            this.剔除异常值ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.剔除异常值ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.剔除异常值ToolStripMenuItem.Text = "剔除异常值";
             this.剔除异常值ToolStripMenuItem.Click += new System.EventHandler(this.剔除异常值ToolStripMenuItem_Click);
             // 
@@ -434,56 +419,6 @@
             this.缩放至窗体ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.缩放至窗体ToolStripMenuItem.Text = "缩放至窗体";
             // 
-            // mainmenu
-            // 
-            this.mainmenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.展开ToolStripMenuItem,
-            this.折叠ToolStripMenuItem,
-            this.添加ToolStripMenuItem,
-            this.全选ToolStripMenuItem,
-            this.反选ToolStripMenuItem});
-            this.mainmenu.Name = "mainmenu";
-            this.mainmenu.Size = new System.Drawing.Size(101, 114);
-            // 
-            // 展开ToolStripMenuItem
-            // 
-            this.展开ToolStripMenuItem.Name = "展开ToolStripMenuItem";
-            this.展开ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.展开ToolStripMenuItem.Text = "展开";
-            // 
-            // 折叠ToolStripMenuItem
-            // 
-            this.折叠ToolStripMenuItem.Name = "折叠ToolStripMenuItem";
-            this.折叠ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.折叠ToolStripMenuItem.Text = "折叠";
-            // 
-            // 添加ToolStripMenuItem
-            // 
-            this.添加ToolStripMenuItem.Name = "添加ToolStripMenuItem";
-            this.添加ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.添加ToolStripMenuItem.Text = "添加";
-            this.添加ToolStripMenuItem.Click += new System.EventHandler(this.添加ToolStripMenuItem_Click);
-            // 
-            // 全选ToolStripMenuItem
-            // 
-            this.全选ToolStripMenuItem.Name = "全选ToolStripMenuItem";
-            this.全选ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.全选ToolStripMenuItem.Text = "全选";
-            // 
-            // 反选ToolStripMenuItem
-            // 
-            this.反选ToolStripMenuItem.Name = "反选ToolStripMenuItem";
-            this.反选ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.反选ToolStripMenuItem.Text = "反选";
-            // 
-            // tasklist
-            // 
-            this.tasklist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tasklist.Location = new System.Drawing.Point(3, 3);
-            this.tasklist.Name = "tasklist";
-            this.tasklist.Size = new System.Drawing.Size(117, 352);
-            this.tasklist.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -492,6 +427,7 @@
             this.Controls.Add(this.toolStripContainer1);
             this.Name = "Form1";
             this.Text = "森林冰雪冻灾评估软件";
+            this.Load += new System.EventHandler(this.Form1_Load_1);
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
@@ -506,11 +442,13 @@
             this.splitContainer1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axTOCControl1)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mainMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.rightmenu.ResumeLayout(false);
-            this.mainmenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -521,11 +459,9 @@
         private System.Windows.Forms.ToolStripMenuItem 图像阈值法ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 阈值比值法ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 灾情分级ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打开ToolStripMenuItem;
@@ -549,18 +485,13 @@
         private System.Windows.Forms.ToolStripMenuItem 显示ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 移除ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 缩放至窗体ToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip mainmenu;
-        private System.Windows.Forms.ToolStripMenuItem 展开ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 折叠ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 添加ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 全选ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 反选ToolStripMenuItem;
-        private SharpMap.Forms.MapBox mapBox1;
-        private System.Windows.Forms.ToolStripMenuItem 进程ToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         public System.Windows.Forms.TreeView tasklist;
+        private ESRI.ArcGIS.Controls.AxLicenseControl axLicenseControl1;
+        public ESRI.ArcGIS.Controls.AxTOCControl axTOCControl1;
+        public ESRI.ArcGIS.Controls.AxMapControl mainMap;
     }
 }
 

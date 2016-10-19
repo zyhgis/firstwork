@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ESRI.ArcGIS.Carto;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -19,7 +20,7 @@ namespace firstwork
 
        public string pythonscript;  //执行脚本
        public string temp;  //不知道的参数，为“”
-       public string[] index; //输入参数
+       public List<string> index; //输入参数
        public RunPythonScript(Form1 frm,string taskname)
        {
            this.frm = frm;
@@ -42,13 +43,13 @@ namespace firstwork
         {
             string sArgName=pythonscript;
             string args = temp;
-            string[] teps=index;
+            List<string> teps=index;
             Control.CheckForIllegalCrossThreadCalls = false;
             Process p = new Process();
-            string path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + sArgName;// 获得python文件的绝对路径
+            string path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase+"python\\" + sArgName;// 获得python文件的绝对路径
             p.StartInfo.FileName = @"C:\Python27\python.exe";
             string sArguments = path;
-            if (teps.Length > 0)
+            if (teps.Count > 0)
             {
                 foreach (string sigstr in teps)
                 {
@@ -65,7 +66,7 @@ namespace firstwork
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = true;
             p.StartInfo.RedirectStandardError = true;
-            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.CreateNoWindow = true; //FALSE为显示cmd窗口
             
             p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
             p.Start();
@@ -79,6 +80,7 @@ namespace firstwork
 
         }
         delegate void AddTaskListdelegate(string staskstatus); //定义委托类型
+        delegate void AddLayerdelegate(string layerpath);
        /// <summary>
        /// 定义添加treeview的方法
        /// </summary>
@@ -119,8 +121,27 @@ namespace firstwork
                 
             }
         }
-    
-     
+       public void AddLayer(string layerpath)
+        {
+            IRasterLayer rasterLayer;
+            rasterLayer = new RasterLayer();
+            rasterLayer.CreateFromFilePath(layerpath);
+            if (frm.axTOCControl1.InvokeRequired)//如果调用控件的线程和创建控件的线程不是同一个则为true
+            {
+                while (!frm.axTOCControl1.IsHandleCreated)
+                {
+                    //解决窗体关闭时出现“访问已释放句柄”的异常
+                    if (frm.axTOCControl1.Disposing || frm.axTOCControl1.IsDisposed)
+                        return;
+                }
+                AddLayerdelegate d = new AddLayerdelegate(AddLayer);
+                frm.axTOCControl1.Invoke(d, new object[] { layerpath });
+            }
+            else
+            {
+                frm.mainMap.AddLayer(rasterLayer);
+            }
+        }
        void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Data))
@@ -133,6 +154,36 @@ namespace firstwork
                 //result.Text = "状态";
                 log.Info(e.Data);
                 AddTaskList(e.Data);
+                if(e.Data=="ok")
+                {
+                    //MessageForm ms = new MessageForm("ok"+taskname);
+                    //Point p = new Point(Screen.PrimaryScreen.WorkingArea.Width - ms.Width, Screen.PrimaryScreen.WorkingArea.Height);
+                    //ms.PointToClient(p);
+                    //ms.Location = p;
+                    //ms.Show();
+                    //for (int i = 0; i < ms.Height; i++)
+                    //{
+                    //    ms.Location = new Point(p.X, p.Y - i);
+                    //    System.Threading.Thread.Sleep(10);
+                    //}
+                    AddLayer(index[index.Count - 1]);
+                    MessageBox.Show("OK");
+                    
+                }
+                if (e.Data == "fail")
+                {
+                    //MessageForm ms = new MessageForm("ok" + taskname);
+                    //Point p = new Point(Screen.PrimaryScreen.WorkingArea.Width - ms.Width, Screen.PrimaryScreen.WorkingArea.Height);
+                    //ms.PointToClient(p);
+                    //ms.Location = p;
+                    //ms.Show();
+                    //for (int i = 0; i < ms.Height; i++)
+                    //{
+                    //    ms.Location = new Point(p.X, p.Y - i);
+                    //    System.Threading.Thread.Sleep(10);
+                    //}
+                    MessageBox.Show("Fail");
+                }
                 //TreeNode result2 = new TreeNode();
                 //result2.Text = e.Data + Environment.NewLine;//sb.AppendLine(e.Data).ToString();
                 //frm.tasklist.Invoke(new AddTaskNodedelegate(AddTaskNode), new object[] { result2 });

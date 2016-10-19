@@ -45,16 +45,11 @@
             this.helptext = new System.Windows.Forms.TextBox();
             this.hidehelpbt = new System.Windows.Forms.Button();
             this.resulttext = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // datacomboBox
             // 
             this.datacomboBox.FormattingEnabled = true;
-            this.datacomboBox.Items.AddRange(new object[] {
-            "wwqw",
-            "ewqe"});
             this.datacomboBox.Location = new System.Drawing.Point(29, 33);
             this.datacomboBox.Name = "datacomboBox";
             this.datacomboBox.Size = new System.Drawing.Size(299, 20);
@@ -117,9 +112,6 @@
             // selectcomboBox
             // 
             this.selectcomboBox.FormattingEnabled = true;
-            this.selectcomboBox.Items.AddRange(new object[] {
-            "wwqw",
-            "ewqe"});
             this.selectcomboBox.Location = new System.Drawing.Point(28, 85);
             this.selectcomboBox.Name = "selectcomboBox";
             this.selectcomboBox.Size = new System.Drawing.Size(300, 20);
@@ -201,29 +193,11 @@
             this.resulttext.Size = new System.Drawing.Size(298, 21);
             this.resulttext.TabIndex = 17;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(38, 227);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 12);
-            this.label5.TabIndex = 19;
-            this.label5.Text = "label5";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(28, 254);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 20;
-            // 
             // QAWF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(379, 299);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label5);
+            this.ClientSize = new System.Drawing.Size(379, 261);
             this.Controls.Add(this.resulttext);
             this.Controls.Add(this.hidehelpbt);
             this.Controls.Add(this.helptext);
@@ -242,7 +216,7 @@
             this.Controls.Add(this.datacomboBox);
             this.Name = "QAWF";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.Text = "QAWF";
+            this.Text = "7";
             this.Load += new System.EventHandler(this.QAWF_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -263,8 +237,6 @@
         private System.Windows.Forms.Button showhelpbt;
         private System.Windows.Forms.TextBox helptext;
         private System.Windows.Forms.Button hidehelpbt;
-        public System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
         public System.Windows.Forms.ComboBox datacomboBox;
         public System.Windows.Forms.TextBox invaliddata;
         public System.Windows.Forms.ComboBox selectcomboBox;

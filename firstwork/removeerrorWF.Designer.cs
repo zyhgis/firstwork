@@ -109,6 +109,7 @@
             this.okbt.TabIndex = 16;
             this.okbt.Text = "确定";
             this.okbt.UseVisualStyleBackColor = true;
+            this.okbt.Click += new System.EventHandler(this.okbt_Click);
             // 
             // ignoretextBox
             // 

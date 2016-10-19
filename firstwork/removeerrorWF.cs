@@ -55,5 +55,10 @@ namespace firstwork
 
             }
         }
+
+        private void okbt_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
